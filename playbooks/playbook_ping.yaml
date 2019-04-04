@@ -1,0 +1,6 @@
+-
+  name: Bağlantı testi
+  hosts: all_nodes
+  task:
+    - name: ping testi
+      ping:
