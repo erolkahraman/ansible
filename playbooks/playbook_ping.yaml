@@ -1,6 +1,6 @@
 -
-  name: Bağlantı testi
+  name: Baglanti testi
   hosts: all_nodes
-  task:
+  tasks:
     - name: ping testi
       ping:
