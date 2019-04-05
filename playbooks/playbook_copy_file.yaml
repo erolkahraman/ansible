@@ -1,0 +1,11 @@
+-
+  name: Node lara dosya kopyalama
+  hosts: worker_nodes
+  tasks:
+    - name: deneme.txt dosyasi kopyalama
+      copy:
+        src: /tmp/deneme.txt
+        dest: /tmp/deneme.txt
+#	owner:
+#	group:
+        mode: 0644

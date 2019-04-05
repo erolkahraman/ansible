@@ -1,6 +1,6 @@
 -
-  name: Baglanti testi
+  name: Erisim kontrolu
   hosts: all_nodes
   tasks:
-    - name: ping testi
+    - name: ping kontrolu
       ping:
