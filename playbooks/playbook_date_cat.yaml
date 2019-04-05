@@ -1,0 +1,10 @@
+-
+  name: Node kontrolu
+  hosts: all_nodes
+  tasks:
+    - 
+      name: date komutu
+      command: date
+    -
+      name: cat /etc/hosts
+      command: cat /etc/hosts

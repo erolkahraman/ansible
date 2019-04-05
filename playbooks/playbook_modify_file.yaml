@@ -1,0 +1,8 @@
+-
+  name: Node lara dosya guncelleme
+  hosts: worker_nodes
+  tasks:
+    - name: deneme.txt dosyasi guncelleme
+      lineinfile:
+        path: /tmp/deneme.txt
+        line: 'ehuuuu ehuuuu'
