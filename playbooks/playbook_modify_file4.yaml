@@ -4,11 +4,8 @@
   tasks:
     - name: deneme.txt dosyasi guncelleme
       lineinfile:
-#       insertbefore:
+        insertbefore: 'behuu'
 #       insertafter:
-#       regexp:
+        regexp: 'behu'
         path: /tmp/deneme.txt
-        line: "{{ item }}"
-      with_items:
-        - 'ehuuuu'
-        - '-------'
+        line: 'tehuu'

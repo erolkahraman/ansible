@@ -6,9 +6,7 @@
       lineinfile:
 #       insertbefore:
 #       insertafter:
-#       regexp:
+        regexp: 'ehu'
+        state: present
         path: /tmp/deneme.txt
-        line: "{{ item }}"
-      with_items:
-        - 'ehuuuu'
-        - '-------'
+        line: 'ehuuu ehuuu behuu'
