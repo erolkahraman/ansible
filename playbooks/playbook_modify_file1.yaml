@@ -4,5 +4,8 @@
   tasks:
     - name: deneme.txt dosyasi guncelleme
       lineinfile:
+#       insertbefore:
+#       insertafter:
+#       regexp:
         path: /tmp/deneme.txt
         line: 'ehuuuu ehuuuu'
