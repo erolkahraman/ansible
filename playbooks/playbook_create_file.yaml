@@ -1,0 +1,6 @@
+-
+  name: Dosya olusturma...
+  hosts: worker_nodes
+  tasks:
+    - name: script ile dosya olusturma...
+      script: /root/ansible/scripts/create_file.sh
