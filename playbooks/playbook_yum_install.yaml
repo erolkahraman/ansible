@@ -1,0 +1,7 @@
+-
+  name: install elinks
+  hosts: app-node1
+    - name: install elinks
+      yum:
+        name: elinks
+        state: present

@@ -1,0 +1,2 @@
+araba_modeli: Honda
+uretim_yili: 2000

@@ -1,0 +1,8 @@
+-
+  name: Node lardan dosya silme
+  hosts: worker_nodes
+  tasks:
+    - name: deneme.txt dosyasi silme
+      file:
+        path: /tmp/deneme.txt
+        state: absent

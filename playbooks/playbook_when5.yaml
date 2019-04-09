@@ -1,0 +1,12 @@
+-
+  name: start dnsmasq
+  hosts: worker_nodes
+  tasks:
+    - name: status dnsmasq
+      command: service dnsmasq status
+      register: status_of_service
+    - name: start dnsmasq
+      service:
+        name: dnsmasq
+        state: started
+      when: status_of_service.stdout.find('down') != -1

@@ -1,0 +1,10 @@
+-
+  name: install elinks
+  hosts: worker_nodes
+  tasks:
+    - name: app-node1 paket yukleme
+      yum:
+        name: elinks
+        state: present
+      when:
+        ansible_host == "app-node1.uasis.org"

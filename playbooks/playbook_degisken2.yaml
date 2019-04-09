@@ -1,0 +1,16 @@
+-
+  name: Degisken kullanimi
+  hosts: worker_nodes
+  vars:
+    araba_modeli: Honda
+    uretim_yili: 2000
+  tasks:
+    - name: Araba modeli ekleme
+      lineinfile:
+        path: /tmp/deneme.txt
+        line: "Araba modeli {{ araba_modeli }}"
+    - name: Araba uetim yili ekleme
+      lineinfile:
+        path: /tmp/deneme.txt
+        line: "Araba uretim yili {{ uretim_yili }}"  
+

@@ -1,0 +1,12 @@
+-
+  name: Dongu ile kullanici olusturma
+  hosts: localhost
+  tasks:
+    - name: test kullanicisi olusturma
+      user:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - testuser1
+        - testuser2
+        - testuser3 

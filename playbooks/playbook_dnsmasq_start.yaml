@@ -1,0 +1,8 @@
+-
+  name: start dnsmasq
+  hosts: app-node1
+  tasks:
+    - name: start dnsmasq
+      service:
+        name: dnsmasq
+        state: started
