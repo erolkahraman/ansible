@@ -14,4 +14,4 @@ master1 ansible_host=master1.uasis.org ansible_connection=ssh
 [all_nodes:children]
 worker_nodes
 infra_nodes
-master_nodes.
+master_nodes
