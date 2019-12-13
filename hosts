@@ -1,0 +1,3 @@
+[nodes]
+node01 ansible_host=node01.testlab.org ansible_connection=ssh
+node02 ansible_host=node02.testlab.org ansible_connection=ssh
