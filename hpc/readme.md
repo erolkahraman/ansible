@@ -1,1 +1,0 @@
-VÇA için gerekli kurulumlar.
