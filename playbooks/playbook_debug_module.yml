@@ -50,3 +50,7 @@
     - name: Print COMMAND lines
       debug:
         var: sonuc.stdout_lines 
+    - name: Print COMMAND lines1
+      debug:
+#        var: sonuc.cmd
+        msg: "{{ sonuc.cmd }}"

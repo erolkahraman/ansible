@@ -1,7 +1,42 @@
--
-  name: install elinks
-  hosts: app-node1
-    - name: install elinks
+---
+- name: Install Packages for Analisys Sistem
+  hosts: node01
+  vars:
+    packages:
+      - elinks
+      - wget
+      - bzip2-devel
+      - cmake
+      - pkgconfig
+      - git
+      - libpng-devel
+      - libjpeg-turbo-devel
+      - jasper-devel
+      - openexr-devel
+      - libtiff-devel
+      - libwebp-devel
+      - libdc1394-devel
+      - libv4l-devel
+      - gstreamer-plugins-base-deve
+      - gtk2-devel
+      - tbb-devel
+      - eigen3-devel
+      - python2-devel
+      - boost-devel
+      - java-1.8.0-openjdk-devel
+      - yasm
+      - qt5-qtbase-devel
+      - qt5-qtbase-postgresql
+      - 
+  gather_facts: false  
+  tasks:
+    - name: Install Task 1
       yum:
-        name: elinks
+        name: "{{ packages }}"
         state: present
+- name: Install TAR balls
+  host: node02
+  vars:
+    leptonica_link: http://www.leptonica.org/source/leptonica-{{ leptonica_version }}.tar.gz
+    leptonica_version: 1.74.4
+
