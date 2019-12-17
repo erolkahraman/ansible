@@ -1,0 +1,24 @@
+---
+- name: File or Directory Operations
+  hosts: node01
+  gather_facts: false
+  vars:
+    dirs:
+      - /opt/skaas/3rdparty/leptonica
+      - /opt/skaas/3rdparty/lib
+      - /opt/skaas/3rdparty/ffmpeg
+      - /opt/skaas/3rdparty/tesseract
+      - /opt/skaas/3rdparty/x265
+      - /opt/skaas/3rdparty/fdkaac/include
+      - /opt/skaas/3rdparty/x264/include
+      - /opt/skaas/3rdparty/lame/include
+  tasks:
+    - name: Create Directory
+      file:
+        path: "{{ item }}"
+        state: directory
+        recurse: yes
+      with_items: "{{ dirs }}"
+      register: result
+    - debug:
+        var: result.msg

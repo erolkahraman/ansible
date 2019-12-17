@@ -1,0 +1,17 @@
+---
+- name: GIT Playbook
+  hosts: node01
+  gather_facts: false
+  tasks:
+    - name: OpenCV
+      tags: opencv
+      git:
+        repo: https://github.com/Itseez/opencv.git
+        dest: /tmp/opencv
+    - name: OpenCV Contrib
+      tags: opencv_contrib
+      git:
+        repo: https://github.com/Itseez/opencv_contrib.git
+        dest: /tmp/opencv_contrib
+
+

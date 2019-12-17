@@ -1,0 +1,56 @@
+---
+- name: Usage of DEBUG module
+  hosts: node01
+  tags: 
+    - debug
+  tasks:
+
+# Herhangi bir mesaji ekrana bastirabilmek icin kullanilan task:
+    - name: Message
+      debug:
+        msg: "Merhaba Dünya..."
+      tags: 
+        - birinci
+        - sadece_mesaj
+
+# Gathering Fact ile elde edilen bilgilerden IP adresini gormek icin
+# kullanilan task; 
+    - name:  IP Address Info
+      debug:
+        msg: "{{ansible_all_ipv4_addresses}}"
+      tags: ikinci
+
+# Gathering Fact ile elde edilen bilgilerden CPU bilgisini gormek
+# icin kullanilan task:
+    - name: CPU Info
+      debug:
+        msg: "{{ ansible_processor[2] }}"
+
+# Gathering Fact ile elde edilen bilgilerden IP bilgisini,
+# kosullu olarak (eger gw tanimli ise) gormek icin
+# kullanilan task.
+    - name: IP if GW exists
+      debug:
+        msg: System {{ inventory_hostname }} has gateway {{ ansible_default_ipv4.gateway }}
+      when: ansible_default_ipv4.gateway is defined
+
+# uptime komutu calistirmak icin kullanilan task.
+    - name: UPTIME command
+      command: ls -la
+      register: sonuc
+
+# Bir onceki task ile elde edilen stdout ve stderr gormek
+# icin kullanilan tasklar.
+    - name: Print STDOUT
+      debug: 
+        msg: "{{ sonuc.stdout }}"
+    - name: Print STDERR
+      debug:
+        msg: "{{ sonuc.stderr }}"
+    - name: Print COMMAND lines
+      debug:
+        var: sonuc.stdout_lines 
+    - name: Print COMMAND lines1
+      debug:
+#        var: sonuc.cmd
+        msg: "{{ sonuc.cmd }}"

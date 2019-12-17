@@ -1,0 +1,19 @@
+---
+- name: Get Files From HTTP(S)
+  hosts: node01
+  gather_facts: false
+  vars:
+    leptonica_link: http://www.leptonica.org/source/leptonica-{{ leptonica_version }}.tar.gz
+    leptonica_version: 1.74.4
+    tesseract_link: https://github.com/tesseract-ocr/tesseract/archive/{{ tesseract_version }}.tar.gz
+    tesseract_version: 3.05.02
+  tasks:
+    - name: Download Tesseract
+      get_url:
+        url: "{{ tesseract_link }}"
+        dest: /tmp
+    - name: Download Leptonica
+      get_url:
+        timeout: 30
+        url: "{{ leptonica_link }}"
+        dest: /tmp

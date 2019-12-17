@@ -1,0 +1,56 @@
+---
+- name: Install Packages for Analisys Sistem
+  hosts: node01
+  vars:
+    packages:
+      - epel-release.noarch
+      - elinks
+      - wget
+      - bzip2-devel
+      - cmake
+      - pkgconfig
+      - git
+      - libpng-devel
+      - libjpeg-turbo-devel
+      - jasper-devel
+      - openexr-devel
+      - libtiff-devel
+      - libwebp-devel
+      - libdc1394-devel.x86_64
+      - libv4l-devel
+      - gstreamer-plugins-base-devel
+      - gtk2-devel
+      - tbb-devel
+      - eigen3-devel.noarch
+      - python2-devel
+      - boost-devel
+      - java-1.8.0-openjdk-devel
+      - yasm
+      - qt5-qtbase-devel
+      - qt5-qtbase-postgresql
+  gather_facts: false  
+  tasks:
+    - name: Install EPEL Repo
+      tags: epel
+      yum:
+        name: epel-release.noarch
+        state: present
+    - name: Install Development Packages
+      tags: dev_tools
+      yum:
+        name: "@Development Tools"
+        state: present
+      register: task1_result
+    - debug:
+        var: task1_result
+#        msg: "{{ task1_result.stdout_lines }}"   
+    - name: Install Required Packages 
+      tags: vca_tools
+      yum:
+        name: "{{ packages }}"
+        state: present
+      register: task2_result
+    - debug:
+#        msg: "{{ task2_result.stdout_lines }}"   
+        var: task2_result
+

@@ -1,0 +1,17 @@
+---
+- name: Unarchive Files
+  hosts: node01
+  gather_facts: false
+  vars:
+    tesseract_version: 3.05.02
+  tasks:
+    - name: Unarchive Leptonica
+      unarchive:
+        src: tarballs/leptonica-1.74.4.tar.gz
+        dest: /tmp
+        copy: yes
+    - name: Unarchive Tesseract
+      unarchive:
+        src: tarballs/tesseract-3.05.02.tar.gz
+        dest: /tmp
+        copy: yes
