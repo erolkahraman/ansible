@@ -5,12 +5,17 @@
   vars:
     tesseract_version: 3.05.02
   tasks:
-    - name: Unarchive Leptonica
+    - name: Unpack Leptonica
       unarchive:
         src: tarballs/leptonica-1.74.4.tar.gz
         dest: /tmp
         copy: yes
-    - name: Unarchive Tesseract
+    - name: Unpack Tesseract
+      unarchive:
+        src: tarballs/tesseract-3.05.02.tar.gz
+        dest: /tmp
+        copy: yes
+    - name: Unpack Opencv
       unarchive:
         src: tarballs/tesseract-3.05.02.tar.gz
         dest: /tmp
