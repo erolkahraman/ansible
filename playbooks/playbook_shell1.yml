@@ -1,2 +1,9 @@
 ---
+- name: SHELL Module Test
+  hosts: node01
+  tasks:
+    - name: CAT Command
+      shell: cat < playbook_ping.yml
+      
+        
 
