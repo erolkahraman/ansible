@@ -29,6 +29,7 @@
       - qt5-qtbase-devel
       - qt5-qtbase-postgresql
       - opencv-python.x86_64
+      - mlocate.x86_64
   gather_facts: false  
   tasks:
     - name: Install EPEL Repo

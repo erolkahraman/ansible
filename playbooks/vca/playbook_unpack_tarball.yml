@@ -1,22 +1,57 @@
 ---
-- name: Unarchive Files
+- name: Unpack Files
   hosts: node01
   gather_facts: false
   vars:
     tesseract_version: 3.05.02
   tasks:
     - name: Unpack Leptonica
+      tags: leptonica
       unarchive:
         src: tarballs/leptonica-1.74.4.tar.gz
         dest: /tmp
         copy: yes
     - name: Unpack Tesseract
+      tags: tesseract
       unarchive:
         src: tarballs/tesseract-3.05.02.tar.gz
         dest: /tmp
         copy: yes
-    - name: Unpack Opencv
+    - name: Unpack OpenCV
+      tags: opencv
       unarchive:
-        src: tarballs/tesseract-3.05.02.tar.gz
+        src: tarballs/opencv.tar.gz
         dest: /tmp
         copy: yes
+    - name: Unpack OpenCV_Contrib
+      tags: opencv_contrib
+      unarchive:
+        src: tarballs/opencv_contrib.tar.gz 
+        dest: /tmp
+        copy: yes
+    - name: Unpack FFMPEG
+      tags: ffmpeg
+      unarchive:
+        src: tarballs/ffmpeg.tar.gz
+        dest: /tmp
+        copy: yes
+    - name: Unpack X264
+      tags: x264
+      unarchive:
+        src: tarballs/x264-snapshot-20160511-2245-stable.tar.gz
+        dest: /tmp
+    - name: Unpack X265
+      tags: x265
+      unarchive:
+        src: tarballs/x265_1.9.tar.gz
+        dest: /tmp
+    - name: Unpack LAME
+      tags: lame
+      unarchive:
+        src: tarballs/lame-3.100.tar.gz
+        dest: /tmp
+    - name: Unpack FDKAAC
+      tags: fdkaac
+      unarchive:
+        src: tarballs/fdk-aac-0.1.5.tar.gz
+        dest: /tmp

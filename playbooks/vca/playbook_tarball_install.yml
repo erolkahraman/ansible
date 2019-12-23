@@ -1,19 +1,90 @@
 ---
-- name: Get Files From HTTP(S)
+- name: Install..."
   hosts: node01
   gather_facts: false
   vars:
-    leptonica_link: http://www.leptonica.org/source/leptonica-{{ leptonica_version }}.tar.gz
-    leptonica_version: 1.74.4
-    tesseract_link: https://github.com/tesseract-ocr/tesseract/archive/{{ tesseract_version }}.tar.gz
-    tesseract_version: 3.05.02
   tasks:
-    - name: Download Tesseract
-      get_url:
-        url: "{{ tesseract_link }}"
-        dest: /tmp
-    - name: Download Leptonica
-      get_url:
-        timeout: 30
-        url: "{{ leptonica_link }}"
-        dest: /tmp
+    - name: Install LEPTONICA (./configure)
+      tags: leptonica1
+      shell:
+        cmd: ./configure --prefix=/opt/skaas/3rdparty/leptonica --libdir=/opt/skaas/3rdparty/lib/ --enable-shared --enable-static
+        chdir: /tmp/leptonica-1.74.4
+    - name: Install LEPTONICA (make && make install)
+      tags: leptonica2
+      shell:
+        cmd: make && make install
+        chdir: /tmp/leptonica-1.74.4
+    - name: Install FDKAAC (./configure)
+      tags:
+        - fdkaac1
+        - fdkaac 
+      shell:
+        cmd: ./configure --prefix=/opt/skaas/3rdparty/leptonica --libdir=/opt/skaas/3rdparty/lib/ --enable-shared --enable-static
+        chdir: /tmp/fdk-aac-0.1.5
+    - name: Install FDKAAC (make && make install)
+      tags: 
+        - fdkaac2
+        - fdkaac
+      shell:
+        cmd: make && make install
+        chdir: /tmp/fdk-aac-0.1.5
+    - name: Install LAME (./configure)
+      tags:
+        - lame1
+        - lame 
+      shell:
+        cmd: ./configure --prefix=/opt/skaas/3rdparty/lame --libdir=/opt/skaas/3rdparty/lib/ --enable-shared --enable-static
+        chdir: /tmp/lame-3.100
+    - name: Install LAME (make && make install)
+      tags: 
+        - lame
+        - lame2
+      shell:
+        cmd: make && make install
+        chdir: /tmp/lame-3.100
+    - name: Install X264 (./configure)
+      tags:
+        - x264_1
+        - x264
+      shell:
+        cmd: ./configure --prefix=/opt/skaas/3rdparty/x264 --libdir=/opt/skaas/3rdparty/lib/ --enable-shared --enable-static
+        chdir: /tmp/x264-snapshot-20160511-2245-stable
+    - name: Install x264 (make && make install)
+      tags: 
+        - x264
+        - x264_2
+      shell:
+        cmd: make && make install
+        chdir: /tmp/x264-snapshot-20160511-2245-stable
+    - name: Install X265 (./configure)
+      tags:
+        - x265_1
+        - x265
+      shell:
+        cmd: cmake ../source
+        chdir: /tmp/x265_1.9/build
+    - name: Install x265 (make && make install)
+      tags: 
+        - x265
+        - x265_2
+      shell:
+        cmd: make && make install
+        chdir: /tmp/x265_1.9/build
+    - name: Install FFMPEG (./configure)
+      tags:
+        - ffmpeg_1
+        - ffmpeg
+      shell:
+        cmd: ./configure --prefix=/opt/skaas/3rdparty/ffmpeg --libdir=/opt/skaas/3rdparty/lib/ \
+            --enable-shared --enable-static --enable-libx264   --enable-libx265  \
+            --enable-libmp3lame   --enable-libfdk-aac --enable-nonfree --enable-gpl \
+            --extra-ldflags="-L/opt/skaas/3rdparty/lib" \
+            --extra-cflags="-I/opt/skaas/3rdparty/fdkaac/include -I/opt/skaas/3rdparty/lame/include -I/opt/skaas/3rdparty/x264/include -I/opt/skaas/3rdparty/x265"
+        chdir: /tmp/ffmpeg
+    - name: Install x265 (make && make install)
+      tags: 
+        - ffmpeg
+        - ffmpeg_2
+      shell:
+        cmd: make && make install
+        chdir: /tmp/ffmpeg

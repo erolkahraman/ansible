@@ -1,9 +1,17 @@
 ---
 - name: SHELL Module Test
   hosts: node01
+  gather_facts: false
   tasks:
+    - name: Ansible check file exists.
+      tags: check_if_exists
+      stat:
+        path: /tmp/deneme.txt
+      register: p
+###########################################################
     - name: CAT Command
-      shell: cat < playbook_ping.yml
-      
-        
-
+      shell: 
+        cmd: cat < deneme.txt
+      args: 
+        chdir: /tmp
+      when: p.stat.exists == True

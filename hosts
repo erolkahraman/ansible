@@ -2,3 +2,8 @@
 node01 ansible_host=node01.testlab.org ansible_connection=ssh
 node02 ansible_host=node02.testlab.org ansible_connection=ssh
 node03 ansible_host=node03.testlab.org ansible_connection=ssh
+
+[vmhosts]
+vmhost01 ansible_host=172.16.0.241 ansible_connection=ssh
+vmhost02 ansible_host=172.16.0.242 ansible_connection=ssh
+vmhost03 ansible_host=172.16.0.243 ansible_connection=ssh
