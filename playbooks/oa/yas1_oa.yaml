@@ -78,10 +78,22 @@
           - epel-release
           - https://download1.rpmfusion.org/free/el/updates/8/x86_64/r/rpmfusion-free-release-8-0.1.noarch.rpm
           - bash-completion
-          - "@Development Tools"
-          - opencv-core
-          - opencv-contrib
+          - python3
+          - mlocate
+          - cmake
+          - wget
+          - elinks
+          - libpng-devel
+          - libjpeg-turbo-devel
+          -  
         state: present
+    - name: Devel Tools
+      tags: i_dev_tools
+      dnf:
+        name:
+          - "@Development Tools"
+        state: present
+
 #------------------------------------------------#
 #                                                #
 #              Start/Enable Services             #

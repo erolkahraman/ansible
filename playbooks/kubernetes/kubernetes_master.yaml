@@ -21,6 +21,7 @@
         - 172.16.0.110 w-node2.kubtest.com w-node2
         - 172.16.0.111 m-node1.kubtest.com m-node1
     - name: Updating /etc/sysctl.d/k8s.conf file
+      tags: k8s_conf
       lineinfile:
         path: /etc/sysctl.d/k8s.conf
         line: "{{ item }}"
@@ -28,9 +29,14 @@
         - net.bridge.bridge-nf-call-ip6tables = 1
         - net.bridge.bridge-nf-call-iptables = 1
     - name: Check net.bridge.bridge-nf-call-iptables
-      command: ST=$(cat /proc/sys/net/bridge/bridge-nf-call-iptables) 
+      tags: sysctl_reload
+      command: sysctl -n net.bridge.bridge-nf-call-ip6tables
       register: x_status
+    - debug:
+        msg: "{{ s_status.stdout }}"
+#        vars: x_status.stdout
     - name: Reload sysctl
+      tags: sysctl_reload1
       command: sysctl --system
       when: x_status.stdout != 1    
     - name: Changing selinux in Permisive mode
