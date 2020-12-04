@@ -28,17 +28,9 @@
       with_items:
         - net.bridge.bridge-nf-call-ip6tables = 1
         - net.bridge.bridge-nf-call-iptables = 1
-    - name: Check net.bridge.bridge-nf-call-iptables
-      tags: sysctl_reload
-      command: sysctl -n net.bridge.bridge-nf-call-ip6tables
-      register: x_status
-    - debug:
-        msg: "{{ s_status.stdout }}"
-#        vars: x_status.stdout
     - name: Reload sysctl
-      tags: sysctl_reload1
+      tags: sysctl_reload
       command: sysctl --system
-      when: x_status.stdout != 1    
     - name: Changing selinux in Permisive mode
       selinux:
         state: permissive
@@ -138,21 +130,6 @@
       with_items:
         - docker.service
         - kubelet.service
-    - name: Check for selinux policy
-      command: getenforce
-      register: selinux_status
-    - name: Reboot...
-      tags: reboot
-      reboot:
-      when: selinux_status.stdout != "Permissive"
-    - name: Wait to start 
-      wait_for:
-        timeout: 180
-        port: 22
-        delay: 10 
-    - name: Test
-      command: echo test...
-  
 ##################### Start Services #######################
 
     - name: Run "swapoff -a" command
