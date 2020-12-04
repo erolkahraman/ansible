@@ -1,0 +1,101 @@
+---
+  -
+    name: Install Kubernetes 
+    hosts: yas1
+    tasks:
+#------------------------------------------------#
+#                                                #
+#         Network and Security                   #
+#                                                #
+# - Edit /etc/hosts file                         #
+# - Modify selinux (enforcing -> permissive)     #
+# - Add ports to firewall                        #
+#                                                #
+#------------------------------------------------#
+    - name: Set a hostname
+      hostname:
+        name: yas1.oa.net
+    - name: Changing selinux in Permisive mode
+      selinux:
+        state: permissive
+        policy: targeted
+    - name: Add local BaseOS repository
+      tags:
+        - add_local_BaseOS
+      yum_repository:
+        name: local_centos8_BaseOS
+        description: Local Centos8 BaseOS
+        baseurl: http://centos8repo.b740.net/BaseOS
+        enabled: yes
+    - name: Add local extras repository
+      tags:
+        - add_local_extras
+      yum_repository:
+        name: local_centos8_extras
+        description: Local Centos8 extras
+        baseurl: http://centos8repo.b740.net/extras
+        enabled: yes
+    - name: Add local AppStream repository
+      tags:
+        - add_local_AppStream
+      yum_repository:
+        name: local_centos8_AppStream
+        description: Local Centos8 AppStream
+        baseurl: http://centos8repo.b740.net/AppStream
+        enabled: yes
+
+    - name: Add docker repository
+      tags:
+        - add_docker_repo
+      yum_repository:
+        name: docker-ce-stable
+        description: Docker CE Stable - $basearch
+        baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+        gpgcheck: yes
+        enabled: yes
+        gpgkey: https://download.docker.com/linux/centos/gpg
+    - name: Update OS
+      tags: 
+        - update_os
+      dnf:
+        name: "*"
+        disablerepo: "*"
+        enablerepo: docker-ce-stable,local_centos8_AppStream,local_centos8_extras,local_centos8_BaseOS
+        state: latest 
+    - name: Install docker-ce
+      tags:
+        - i_docker
+      dnf:
+        name: 
+          - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+          - docker-ce
+        state: present
+        disable_gpg_check: yes
+    - name: Install required packages
+      tags: i_others
+      dnf:
+        name:
+          - epel-release
+          - https://download1.rpmfusion.org/free/el/updates/8/x86_64/r/rpmfusion-free-release-8-0.1.noarch.rpm
+          - bash-completion
+          - "@Development Tools"
+          - opencv-core
+          - opencv-contrib
+        state: present
+#------------------------------------------------#
+#                                                #
+#              Start/Enable Services             #
+#                                                #
+# - Start/enable docker service                  #
+# - Start/enable kubelet service                 #
+#                                                #
+#------------------------------------------------#
+    - name: Start Services
+      tags:
+        - start_services
+      systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: True 
+      with_items:
+        - docker.service
