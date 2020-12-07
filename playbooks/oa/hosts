@@ -42,9 +42,6 @@
 
 ## db-[99:101]-node.example.com
 [all-hosts]
-w-node1 ansible_host=w-node1.kubtest.com ansible_connection=ssh
-w-node2 ansible_host=w-node2.kubtest.com ansible_connection=ssh
-m-node1 ansible_host=m-node1.kubtest.com ansible_connection=ssh
 yas1 ansible_host=yas1.oa.net ansible_connection=ssh
 
 ## sw-hosts için oluşturulan grub değişkenleri tanımlanır. 

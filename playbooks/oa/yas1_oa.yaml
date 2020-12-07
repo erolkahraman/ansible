@@ -43,7 +43,6 @@
         description: Local Centos8 AppStream
         baseurl: http://centos8repo.b740.net/AppStream
         enabled: yes
-
     - name: Add docker repository
       tags:
         - add_docker_repo
@@ -71,6 +70,18 @@
           - docker-ce
         state: present
         disable_gpg_check: yes
+    - name: Install from Power Tools repository
+      tags: i_pt
+      dnf:
+        name: 
+          - leptonica
+          - leptonica-devel
+          - elinks
+          - SDL2
+          - SDL2-devel
+          - SDL2-static
+        enablerepo: docker-ce-stable,local_centos8_AppStream,local_centos8_extras,local_centos8_BaseOS,PowerTools
+        state: present
     - name: Install required packages
       tags: i_others
       dnf:
@@ -82,10 +93,13 @@
           - mlocate
           - cmake
           - wget
-          - elinks
           - libpng-devel
           - libjpeg-turbo-devel
-          -  
+          - libtiff-devel
+          - ffmpeg
+          - ffmpeg-devel
+          - tesseract
+          - tesseract-devel
         state: present
     - name: Devel Tools
       tags: i_dev_tools
