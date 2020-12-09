@@ -72,15 +72,15 @@
           - kubeadm
           - kubectl
           - kubelet
+
+    - name: Add local repository
+      tags:
+        - add_local_repo
+      shell: dnf config-manager --add-repo http://centos8repo.b740.net/centos8.repo
     - name: Install docker-ce
       tags:
         - i_docker
-      dnf:
-        name:
-          - https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
-          - docker-ce
-        state: present
-        disable_gpg_check: yes
+      shell: dnf install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm docker-ce --nobest
     - name: Install kubernetes
       tags: i_kubernetes
       dnf:
@@ -100,6 +100,8 @@
         - update_os
       dnf:
         name: "*"
+        disablerepo: "*"
+        enablerepo: b740-centos8-AppStream,b740-centos8-BaseOS,b740-centos8-extras
         state: latest
     - name: Start Services
       tags:
