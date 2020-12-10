@@ -4,7 +4,7 @@
 #         Set up hosts                           #
 #                                                #
 # - Edit /etc/hosts file                         #
-# - Modify selinux (enforcing -> permissive)     #
+# - Modify selinux (enforcing -> (disabled )     #
 # - Set sysctl vars                              #
 # - Add ports to firewall                        #
 # - Add docker repository                        #
@@ -38,15 +38,30 @@
       command: sysctl --system
     - name: Changing selinux in Permisive mode
       selinux:
-        state: permissive
-        policy: targeted
+        state: disabled
+#        policy: targeted
     - name: Adding ports to firewalld
+      tags: firewalld
       firewalld:
         port: "{{ item }}"
         permanent: true
         state: enabled
         immediate: yes
       with_items: "{{ ports }}"
+    - name: Enable firewall logging (blocked) (1/2)
+      tags: firewalld
+      replace:
+        path: /etc/firewalld/firewalld.conf
+        regexp: 'LogDenied=off'
+        replace: 'LogDenied=all'
+    - name: Enable firewall logging (blocked) (2/2)
+      tags: firewalld
+      copy:
+        dest: /etc/rsyslog.d/firewalld-droppd.conf
+        content: |
+          :msg,contains,"_DROP" /var/log/firewalld-droppd.log
+          :msg,contains,"_REJECT" /var/log/firewalld-droppd.log
+          & stop
     - name: Add docker repository
       tags:
         - add_docker_repo
