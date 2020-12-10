@@ -8,7 +8,7 @@
 #      - ansible_ssh_user: root
     tasks:
       - name: Init kubeadm
-        shell: kubeadm init --pod-network-cidr=10.17.0.0/16
+        shell: kubeadm init --pod-network-cidr=10.17.0.0/16 --service-cidr=10.18.0.0/16
         register: output
       - name: Createing join command file
         local_action: copy content="{{ output.stdout_lines|join('\n') }}" dest="output.txt"
@@ -28,9 +28,9 @@
           dest: "{{ ansible_ssh_user_home }}.kube/config"    
           owner: "{{ ansible_ssh_user }}"
           group: "{{ ansible_ssh_user }}"
-      - name: Add network plugin
-        tags: net
-        command: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+#      - name: Add network plugin
+#        tags: net
+#        command: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 #        command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 #        shell: kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 

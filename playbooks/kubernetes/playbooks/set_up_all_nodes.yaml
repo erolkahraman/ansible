@@ -48,6 +48,19 @@
         state: enabled
         immediate: yes
       with_items: "{{ ports }}"
+
+    - name: Enable Masquerade 
+      firewalld:
+        masquerade: yes
+        state: enabled
+        permanent: yes
+        immediate: yes
+    - name: Add rich rule for hosts
+      firewalld:
+        rich_rule: rule family="ipv4"  source address="172.16.0.0/24" accept
+        permanent: yes
+        state: enabled
+        immediate: yes
     - name: Enable firewall logging (blocked) (1/2)
       tags: firewalld
       replace:
